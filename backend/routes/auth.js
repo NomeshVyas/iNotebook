@@ -21,17 +21,18 @@ router.post('/createuser',
     }
     try{
       //// Check whether the user with this email exists already
-      let user = await User.findOne({email: req.body.email});
+      const {name, email, password}=req.body;
+      let user = await User.findOne({email: email});
       if(user){
         return res.status(400).json({error: "sorry a user with this email is already exists"})
       }
     //// Securing password through hash and salt
     const salt = await bcrypt.genSalt(10);
-    const securePassword = await bcrypt.hash(req.body.password, salt);
+    const securePassword = await bcrypt.hash(password, salt);
     //// Create a new user
     user = await User.create({
-      name: req.body.name,
-      email: req.body.email,
+      name: name,
+      email: email,
       password: securePassword
     })
 
@@ -41,7 +42,6 @@ router.post('/createuser',
       }
     }
     var authToken = jwt.sign(data, JWT_SECRET);
-
     res.json(authToken)
     // res.json(user)
     }
@@ -50,5 +50,41 @@ router.post('/createuser',
       res.status(500).send("some error occured")
     }
 })
+
+//// Create a User using: POST "/api/auth/login". No login required
+router.post('/login',[
+  body('email', 'Enter a valid email').isEmail(),
+  body('password', 'password can not be blanck').exists()
+  ], async (req,res)=>{
+  //// If there are errors, return Bad request and the errors
+    const error=validationResult(req);
+    if(!error.isEmpty()){
+      return res.status(400).json({error: error.array()});
+    }
+    try {
+      //// Check whether the user with this email exists already
+      const {email, password}=req.body;
+      let user = await User.findOne({email});
+      if(!user){
+        res.status(400).json({error: "Please try to login with correct credentials"});
+      }
+      //// Check password is correct or not
+      const passwordCompare = await bcrypt.compare(password, user.password);
+      if(!passwordCompare){
+        res.status(400).json({error: "Please try to login with correct credentials"});
+      }
+      const data={
+        user:{
+          id: user.id
+        }
+      }
+      var authToken = jwt.sign(data, JWT_SECRET);
+      res.json({authToken});
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({error: "Internal Server Error"})
+    }
+})
+
 
 module.exports = router
