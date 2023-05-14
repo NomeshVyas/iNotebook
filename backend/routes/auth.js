@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
+
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var fetchuser = require('../middleware/fetchuser');
@@ -46,10 +47,9 @@ router.post('/createuser',
       var authToken = jwt.sign(data, JWT_SECRET);
       res.json(authToken)
       // res.json(user)
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err.message);
-      res.status(500).send("some error occured")
+      res.status(500).json({error: "Internal Server Error"})
     }
 })
 
