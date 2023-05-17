@@ -84,7 +84,7 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
     if (!note) {
       return res.status(404).send("Not Found");
     }
-    // Allow deletion only if user owns this Note
+    //// Allow deletion only if user owns this Note
     if (note.user.toString() !== req.user.id) {
       return res.status(401).send("Not Allowed");
     }
