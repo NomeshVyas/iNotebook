@@ -26,12 +26,12 @@ const AddNote = () => {
                     {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="description" className="form-label">Description</label>
-                    <input type="text" className="form-control" id="description" name='description' onChange={onChange} />
+                    <label htmlFor="description" className="form-label col-form-label-lg">Description</label>
+                    <input type="text" className="form-control form-control-lg" id="description" name='description' onChange={onChange} />
                 </div>
-                <div className="mb-3 form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                <div className="mb-3">
+                    <label className="form-label" htmlFor="tag">Tag</label>
+                    <input type="text" className="form-control" id="tag" name='tag' onChange={onChange} />
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={handleClickOnAddNote}>Submit</button>
              </form>
