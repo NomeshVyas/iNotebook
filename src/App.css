@@ -1,3 +1,31 @@
+/* AddNote */
+.description{
+    height: 175px;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    resize: none;
+}
+.title{
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+/* Notes */
+.eDescription{
+    height: 150px;
+    resize: none;
+}
+.fa-triangle-exclamation{
+    font-size: 1.35rem;
+}
+/* NoteItem */
 i{
     cursor: pointer;
+}
+.fa-pen-to-square:hover{
+    color: purple;
+}
+.fa-trash:hover{
+    color: crimson;
 }
