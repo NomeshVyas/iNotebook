@@ -20,6 +20,7 @@ router.post(
   async (req, res) => {
     //// If there are errors, return Bad request and the errors
     const error = validationResult(req);
+    let success = false;
     if (!error.isEmpty()) {
       return res.status(400).json({ error: error.array() });
     }
@@ -30,7 +31,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ error: "sorry a user with this email is already exists" });
+          .json({ success, error: "sorry a user with this email is already exists" });
       }
       //// Securing password through hash and salt
       const salt = await bcrypt.genSalt(10);
@@ -49,7 +50,8 @@ router.post(
       };
 
       var authToken = jwt.sign(data, JWT_SECRET);
-      res.json(authToken);
+      success = true;
+      res.json({success, authToken});
       // res.json(user)
     } catch (err) {
       console.error(err.message);
@@ -68,6 +70,7 @@ router.post(
   async (req, res) => {
     //// If there are errors, return Bad request and the errors
     const error = validationResult(req);
+    let success = false;
     if (!error.isEmpty()) {
       return res.status(400).json({ error: error.array() });
     }
@@ -78,20 +81,21 @@ router.post(
       if (!user) {
         res
           .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+          .json({success, error: "Please try to login with correct credentials" });
       }
       //// Check password is correct or not
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
         res
           .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+          .json({success, error: "Please try to login with correct credentials" });
       }
       const data = {
         user: { id: user.id },
       };
       var authToken = jwt.sign(data, JWT_SECRET);
-      res.json({ authToken });
+      success = true;
+      res.json({ success, authToken });
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ error: "Internal Server Error" });

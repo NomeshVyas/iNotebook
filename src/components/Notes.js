@@ -13,7 +13,6 @@ const Notes = () => {
     const editRef = useRef(null);
     const closeModalRef = useRef(null);
     const dltModalRef = useRef(null);
-    
 
     const [editedNote, setEditedNote] = useState({ id: "", eTitle: "", eDescription: "", eTag: "" })
     const [dltModal, setDltModal] = useState({id: "", title: ""})
@@ -86,7 +85,7 @@ const Notes = () => {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-success" onClick={handleClickOnUpdateNote} disabled={editedNote.eTitle.length < 2 || editedNote.eDescription.length < 5} >Update Note</button>
+                            <button type="button" className="btn btn-primary" onClick={handleClickOnUpdateNote} disabled={editedNote.eTitle.length < 2 || editedNote.eDescription.length < 5} >Update Note</button>
                             <button type="button" ref={closeModalRef} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
