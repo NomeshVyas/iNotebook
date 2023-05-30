@@ -37,13 +37,13 @@ const Login = () => {
   return (
     <form onSubmit={handleLogin}>
       <div className="mb-3">
-        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-        <input type="email" className="form-control" id="exampleInputEmail1" name='email' value={credentials.email} aria-describedby="emailHelp" onChange={onChange} />
+        <label htmlFor="loginEmail" className="form-label">Email address</label>
+        <input type="email" className="form-control" id="loginEmail" name='email' value={credentials.email} aria-describedby="emailHelp" onChange={onChange} />
         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
       </div>
       <div className="mb-3">
-        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-        <input type="password" className="form-control" id="exampleInputPassword1" name='password' value={credentials.password} onChange={onChange} />
+        <label htmlFor="loginPassword" className="form-label">Password</label>
+        <input type="password" className="form-control" id="loginPassword" name='password' value={credentials.password} onChange={onChange} />
       </div>
       <button type="submit" className="btn btn-primary">Login</button>
     </form>

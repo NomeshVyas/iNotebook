@@ -22,7 +22,7 @@ router.post(
     const error = validationResult(req);
     let success = false;
     if (!error.isEmpty()) {
-      return res.status(400).json({ error: error.array() });
+      return res.status(400).json({ success, error: error.array() });
     }
     try {
       //// Check whether the user with this email exists already
