@@ -1,20 +1,23 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import noteContext from '../context/notes/NoteContext';
+import notesContext from '../context/notes/NoteContext';
+import alertContext from '../context/alerts/AlertContext';
 
 const Signup = () => {
-  const context = useContext(noteContext);
-  const {host} = context;
+  const noteContext = useContext(notesContext);
+  const { host } = noteContext;
+  const altContext = useContext(alertContext);
+  const { showAlert } = altContext;
   let navigate = useNavigate();
-  const [signupCredentials, setSignupCredentials] = useState({name: "", email: "", password: "", confirmPass: ""});
-  
+  const [signupCredentials, setSignupCredentials] = useState({ name: "", email: "", password: "", confirmPass: "" });
+
   const onChange = (e) => {
-    setSignupCredentials({...signupCredentials, [e.target.name]: e.target.value})
+    setSignupCredentials({ ...signupCredentials, [e.target.name]: e.target.value })
   }
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    if(signupCredentials.password!==signupCredentials.confirmPass){
+    if (signupCredentials.password !== signupCredentials.confirmPass) {
       return alert("password dosen't match with confirm password");
     }
     const url = `${host}/api/auth/createuser`;
@@ -23,19 +26,20 @@ const Signup = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({name: signupCredentials.name, email: signupCredentials.email, password: signupCredentials.password })
+      body: JSON.stringify({ name: signupCredentials.name, email: signupCredentials.email, password: signupCredentials.password })
     })
     const json = await response.json();
     console.log(json);
-    if(json.success){
+    if (json.success) {
       navigate("/");
-    } else{
-      alert("sorry a user with this email is already exists");
+      showAlert("Account Created Successfully.", "success");
+    } else {
+      showAlert("Error: Invalid Details.", "danger");
     }
   }
 
   return (
-    <form className='container' onSubmit={handleSignup}>
+    <form className='container mt-4' onSubmit={handleSignup}>
       <div className="mb-3">
         <label htmlFor="username" className="form-label">User Name</label>
         <input type="text" className="form-control" id="username" name='name' value={signupCredentials.name} onChange={onChange} required />

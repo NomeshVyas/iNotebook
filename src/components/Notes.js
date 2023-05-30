@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import notesContext from '../context/notes/NoteContext';
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
-// import noteContext from '../context/notes/NoteContext'
+import alertContext from '../context/alerts/AlertContext';
 
 const Notes = () => {
+    const noteContext = useContext(notesContext);
+    const { notes, fetchAllNotes, editNote, dltNote } = noteContext;
+    const altContext = useContext(alertContext);
+    const {showAlert} = altContext;
 
-    const context = useContext(notesContext);
-    const { notes, fetchAllNotes, editNote, dltNote } = context;
-    // const context = useContext(noteContext);
-    // const {dltNote} = context;
     const editRef = useRef(null);
     const closeModalRef = useRef(null);
     const dltModalRef = useRef(null);
@@ -21,7 +21,7 @@ const Notes = () => {
         fetchAllNotes();
         // eslint-disable-next-line
     }, [])
-
+    
     const onChange = (e) => {
         setEditedNote({ ...editedNote, [e.target.name]: e.target.value })
     }
@@ -33,6 +33,7 @@ const Notes = () => {
         e.preventDefault();
         editNote(editedNote.id, editedNote.eTitle, editedNote.eDescription, editedNote.eTag);
         closeModalRef.current.click();
+        showAlert(`${editedNote.eTitle} has been updated Successfully`, "primary")
     }
     const openDltModal = (currentNote) => {
         dltModalRef.current.click();
@@ -42,6 +43,7 @@ const Notes = () => {
         e.preventDefault();
         dltNote(dltModal.id)
         dltModalRef.current.click();
+        showAlert(`${editedNote.eTitle} has been deleted successfully`, "primary")
     }
     return (
         <>

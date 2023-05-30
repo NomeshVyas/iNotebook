@@ -72,21 +72,21 @@ router.post(
     const error = validationResult(req);
     let success = false;
     if (!error.isEmpty()) {
-      return res.status(400).json({ error: error.array() });
+      return res.status(400).json({ success, error: error.array() });
     }
     try {
       //// Check whether the user with this email exists already
       const { email, password } = req.body;
       let user = await User.findOne({ email });
       if (!user) {
-        res
+        return res
           .status(400)
           .json({success, error: "Please try to login with correct credentials" });
       }
       //// Check password is correct or not
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
-        res
+        return res
           .status(400)
           .json({success, error: "Please try to login with correct credentials" });
       }

@@ -1,16 +1,20 @@
 import React, { useContext, useState } from 'react';
-import noteContext from '../context/notes/NoteContext';
+import notesContext from '../context/notes/NoteContext';
+import alertContext from '../context/alerts/AlertContext';
 
 const AddNote = () => {
-    const context = useContext(noteContext);
-    const { addNote } = context;
+    const noteContext = useContext(notesContext);
+    const { addNote } = noteContext;
+    const altContext = useContext(alertContext);
+    const {showAlert} = altContext;
 
     const [note, setNote] = useState({ title: "", description: "", tag: "default" })
 
     const handleClickOnAddNote = (e) => {
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
-        setNote({ title: "", description: "", tag: "General" })
+        showAlert(`${note.title} added successfully.`, "primary");
+        setNote({ title: "", description: "", tag: "General" });
     }
 
     const onChange = (e) => {
@@ -20,15 +24,15 @@ const AddNote = () => {
     return (
         <div className="container my-3">
             <h2>Add a Note</h2>
-            <form>
-                <div className="">
+            <form onSubmit={handleClickOnAddNote}>
+                <div>
                     <label htmlFor="title" className="form-label col-form-label-lg d-none">Title</label>
-                    <input type="text" className="form-control form-control-lg title" id="title" name='title' aria-describedby="emailHelp" placeholder='Title' value={note.title} onChange={onChange} />
+                    <input type="text" className="form-control form-control-lg title" id="title" name='title' aria-describedby="emailHelp" placeholder='Title' value={note.title} onChange={onChange} minLength={2} required />
                 </div>
                 <hr style={{marginBlock: "0"}} />
                 <div className="mb-2">
                     <label htmlFor="description" className="form-label col-form-label-lg d-none">Description</label>
-                    <textarea type="text" className="form-control description" id="description" name='description' placeholder='Description' value={note.description} onChange={onChange} />
+                    <textarea type="text" className="form-control description" id="description" name='description' placeholder='Description' value={note.description} onChange={onChange} minLength="5" required />
                 </div>
                 <div className="input-group my-3">
                     <label htmlFor="tag" className="input-group-text">Tag</label>
@@ -45,7 +49,7 @@ const AddNote = () => {
                         <option value="Confused">Confused</option>
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={handleClickOnAddNote} disabled={note.title.length < 2 || note.description.length < 5} >Submit</button>
+                <button type="submit" className="btn btn-primary" disabled={note.description.length < 5} >Submit</button>
             </form>
         </div>
     )

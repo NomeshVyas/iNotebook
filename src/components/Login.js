@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import noteContext from '../context/notes/NoteContext'
+import notesContext from '../context/notes/NoteContext'
+import alertContext from '../context/alerts/AlertContext';
 
 
 const Login = () => {
-  const context = useContext(noteContext);
-  const {host} = context
+  const noteContext = useContext(notesContext);
+  const {host} = noteContext;
+  const altContext = useContext(alertContext);
+  const {showAlert} = altContext;
   const [credentials, setCredentials] = useState({email: "", password: ""});
   let navigate = useNavigate();
 
@@ -28,14 +31,15 @@ const Login = () => {
       // redirect
       localStorage.setItem("token", json.authtoken);
       navigate("/");
+      showAlert("Logged in Successfully.", "primary")
     } else{
-      alert("invalid credentials")
+      showAlert("Error: Invalid Email or Password.", "danger")
     }
     console.log(json);
   }
   
   return (
-    <form onSubmit={handleLogin}>
+    <form className='container mt-4' onSubmit={handleLogin}>
       <div className="mb-3">
         <label htmlFor="loginEmail" className="form-label">Email address</label>
         <input type="email" className="form-control" id="loginEmail" name='email' value={credentials.email} aria-describedby="emailHelp" onChange={onChange} />
