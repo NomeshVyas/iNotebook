@@ -3,12 +3,14 @@ import notesContext from '../context/notes/NoteContext';
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
 import alertContext from '../context/alerts/AlertContext';
+import { useNavigate } from 'react-router-dom'
 
 const Notes = () => {
     const noteContext = useContext(notesContext);
     const { notes, fetchAllNotes, editNote, dltNote } = noteContext;
     const altContext = useContext(alertContext);
     const {showAlert} = altContext;
+    let navigate = useNavigate();
 
     const editRef = useRef(null);
     const closeModalRef = useRef(null);
@@ -18,7 +20,12 @@ const Notes = () => {
     const [dltModal, setDltModal] = useState({id: "", title: ""})
 
     useEffect(() => {
-        fetchAllNotes();
+        if(localStorage.getItem("token")){
+            fetchAllNotes();
+        } else{
+            navigate("/login");
+            console.log("b");
+        }
         // eslint-disable-next-line
     }, [])
     
@@ -116,13 +123,16 @@ const Notes = () => {
                 </div>
             </div>
             {/* Notes Section */}
+            {
+            localStorage.getItem('token') && 
             <div className="row my-3">
                 <h2>Your Notes</h2>
                 {notes.length === 0 && <h3 className='container d-flex justify-content-center my-2 text-muted'>No Notes to Display</h3>}
+            
                 {notes.map((note) => {
                     return <NoteItem key={note._id} note={note} updateNote={updateNote} openDltModal={openDltModal} />
                 })}
-            </div>
+            </div>}
         </>
     )
 }

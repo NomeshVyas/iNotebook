@@ -29,7 +29,7 @@ const Login = () => {
     const json = await response.json();
     if(json.success){
       // redirect
-      localStorage.setItem("token", json.authtoken);
+      localStorage.setItem("token", json.authToken);
       navigate("/");
       showAlert("Logged in Successfully.", "primary")
     } else{

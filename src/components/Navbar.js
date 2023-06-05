@@ -1,8 +1,19 @@
-import { React } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { React, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import alertContext from '../context/alerts/AlertContext';
 
 const Navbar = () => {
   let location = useLocation();
+  let navigate = useNavigate();
+
+  const altContext = useContext(alertContext);
+  const {showAlert} = altContext;
+
+  const handleLogOut = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+    showAlert("You have successfully logged out.", "primary")
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,10 +56,10 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <form className="d-flex">
+          {localStorage.getItem("token")? <button className="btn btn-primary btn-sm mx-2 px-2" onClick={handleLogOut} >Log out</button> :<form className="d-flex">
           <Link to="/login" className="btn btn-primary btn-sm mx-2 px-2" role="button">Login</Link>
           <Link to="/signup" className="btn btn-primary btn-sm" role="button">Sign up</Link>
-          </form>
+          </form>}
         </div>
       </div>
     </nav>
