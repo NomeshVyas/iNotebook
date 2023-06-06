@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
-const mongoURI = 'mongodb://127.0.0.1:27017/inotebook';
+const dotenv = require('dotenv');
+
+
+
+
+
 
 const connectToMongo = () => {
-    mongoose.connect(mongoURI).then(
+    mongoose.connect(process.env.MONGO_URI).then(
         () => { console.log("connected to mongo successfully") }
     ).catch(
         ()=>{ console.log("connection error") }
