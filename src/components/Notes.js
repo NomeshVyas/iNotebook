@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import notesContext from '../context/notes/NoteContext';
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
 import alertContext from '../context/alerts/AlertContext';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const Notes = () => {
     const noteContext = useContext(notesContext);
     const { notes, fetchAllNotes, editNote, dltNote } = noteContext;
     const altContext = useContext(alertContext);
-    const {showAlert} = altContext;
+    const { setLoadingProgress, showAlert } = altContext;
     let navigate = useNavigate();
 
     const editRef = useRef(null);
@@ -17,18 +17,18 @@ const Notes = () => {
     const dltModalRef = useRef(null);
 
     const [editedNote, setEditedNote] = useState({ id: "", eTitle: "", eDescription: "", eTag: "" })
-    const [dltModal, setDltModal] = useState({id: "", title: ""})
+    const [dltModal, setDltModal] = useState({ id: "", title: "" })
 
     useEffect(() => {
-        if(localStorage.getItem("token")){
+        if (localStorage.getItem("token")) {
             fetchAllNotes();
-        } else{
+        } else {
             navigate("/login");
             console.log("b");
         }
         // eslint-disable-next-line
     }, [])
-    
+
     const onChange = (e) => {
         setEditedNote({ ...editedNote, [e.target.name]: e.target.value })
     }
@@ -38,19 +38,23 @@ const Notes = () => {
     }
     const handleClickOnUpdateNote = (e) => {
         e.preventDefault();
+        setLoadingProgress(20);
         editNote(editedNote.id, editedNote.eTitle, editedNote.eDescription, editedNote.eTag);
         closeModalRef.current.click();
         showAlert(`${editedNote.eTitle} has been updated Successfully`, "primary")
+        setLoadingProgress(100);
     }
     const openDltModal = (currentNote) => {
         dltModalRef.current.click();
-        setDltModal({id: currentNote._id, title: currentNote.title})
+        setDltModal({ id: currentNote._id, title: currentNote.title })
     }
     const handleClickOnDltNote = (e) => {
         e.preventDefault();
+        setLoadingProgress(20);
         dltNote(dltModal.id)
         dltModalRef.current.click();
         showAlert(`${editedNote.eTitle} has been deleted successfully`, "primary")
+        setLoadingProgress(100);
     }
     return (
         <>
@@ -112,8 +116,8 @@ const Notes = () => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body h6">
-                        <i className="fa-solid fa-triangle-exclamation me-2 text-danger"></i>
-                        Are you sure you want to permanently delete this note?
+                            <i className="fa-solid fa-triangle-exclamation me-2 text-danger"></i>
+                            Are you sure you want to permanently delete this note?
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-danger" onClick={handleClickOnDltNote} >Yes</button>
@@ -124,15 +128,15 @@ const Notes = () => {
             </div>
             {/* Notes Section */}
             {
-            localStorage.getItem('token') && 
-            <div className="row my-3">
-                <h2>Your Notes</h2>
-                {notes.length === 0 && <h3 className='container d-flex justify-content-center my-2 text-muted'>No Notes to Display</h3>}
-            
-                {notes.map((note) => {
-                    return <NoteItem key={note._id} note={note} updateNote={updateNote} openDltModal={openDltModal} />
-                })}
-            </div>}
+                localStorage.getItem('token') &&
+                <div className="row my-3">
+                    <h2>Your Notes</h2>
+                    {notes.length === 0 && <h3 className='container d-flex justify-content-center my-2 text-muted'>No Notes to Display</h3>}
+
+                    {notes.map((note) => {
+                        return <NoteItem key={note._id} note={note} updateNote={updateNote} openDltModal={openDltModal} />
+                    })}
+                </div>}
         </>
     )
 }
