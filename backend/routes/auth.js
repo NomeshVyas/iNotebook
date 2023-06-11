@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
+const dotenv = require("dotenv");
 
 var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 var fetchuser = require("../middleware/fetchuser");
 
-const JWT_SECRET = "Nomeshis@goodb0y";
+
 
 //// ROUTE:1 Create a User using: POST "/api/auth/createuser". No login required
 router.post(
@@ -49,7 +50,7 @@ router.post(
         },
       };
 
-      var authToken = jwt.sign(data, JWT_SECRET);
+      var authToken = jwt.sign(data, process.env.JWT_SECRET);
       success = true;
       res.json({success, authToken});
       // res.json(user)
@@ -65,7 +66,7 @@ router.post(
   "/login",
   [
     body("email", "Enter a valid email").isEmail(),
-    body("password", "password can not be blanck").exists(),
+    body("password", "password can not be blank").exists(),
   ],
   async (req, res) => {
     //// If there are errors, return Bad request and the errors
@@ -93,7 +94,7 @@ router.post(
       const data = {
         user: { id: user.id },
       };
-      var authToken = jwt.sign(data, JWT_SECRET);
+      var authToken = jwt.sign(data, process.env.JWT_SECRET);
       success = true;
       res.json({ success, authToken });
     } catch (err) {
