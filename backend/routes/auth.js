@@ -2,13 +2,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
-const dotenv = require("dotenv");
 
 var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 var fetchuser = require("../middleware/fetchuser");
-
-
 
 //// ROUTE:1 Create a User using: POST "/api/auth/createuser". No login required
 router.post(
@@ -50,7 +47,7 @@ router.post(
         },
       };
 
-      var authToken = jwt.sign(data, process.env.JWT_SECRET);
+      var authToken = jwt.sign(data, process.env.REACT_APP_JWT_SECRET);
       success = true;
       res.json({success, authToken});
       // res.json(user)
@@ -94,7 +91,7 @@ router.post(
       const data = {
         user: { id: user.id },
       };
-      var authToken = jwt.sign(data, process.env.JWT_SECRET);
+      var authToken = jwt.sign(data, process.env.REACT_APP_JWT_SECRET);
       success = true;
       res.json({ success, authToken });
     } catch (err) {

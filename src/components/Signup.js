@@ -31,7 +31,6 @@ const Signup = () => {
     })
     setLoadingProgress(70);
     const json = await response.json();
-    console.log(json);
     if (json.success) {
       localStorage.setItem('token', json.authToken);
       navigate("/");

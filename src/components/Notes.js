@@ -12,8 +12,9 @@ const Notes = () => {
     const { setLoadingProgress, showAlert } = altContext;
     let navigate = useNavigate();
 
+    // const viewRef = useRef(null);
     const editRef = useRef(null);
-    const closeModalRef = useRef(null);
+    const editModalRef = useRef(null);
     const dltModalRef = useRef(null);
 
     const [editedNote, setEditedNote] = useState({ id: "", eTitle: "", eDescription: "", eTag: "" })
@@ -24,7 +25,6 @@ const Notes = () => {
             fetchAllNotes();
         } else {
             navigate("/login");
-            console.log("b");
         }
         // eslint-disable-next-line
     }, [])
@@ -32,6 +32,10 @@ const Notes = () => {
     const onChange = (e) => {
         setEditedNote({ ...editedNote, [e.target.name]: e.target.value })
     }
+    // const viewNote = (currentNote) => {
+    //     viewRef.current.click();
+    //     setEditedNote({ id: currentNote._id, eTitle: currentNote.title, eDescription: currentNote.description, eTag: currentNote.tag });
+    // }
     const updateNote = (currentNote) => {
         editRef.current.click();
         setEditedNote({ id: currentNote._id, eTitle: currentNote.title, eDescription: currentNote.description, eTag: currentNote.tag });
@@ -40,8 +44,8 @@ const Notes = () => {
         e.preventDefault();
         setLoadingProgress(20);
         editNote(editedNote.id, editedNote.eTitle, editedNote.eDescription, editedNote.eTag);
-        closeModalRef.current.click();
-        showAlert(`${editedNote.eTitle} has been updated Successfully`, "primary")
+        editModalRef.current.click();
+        showAlert(`"${editedNote.eTitle}" has been updated Successfully.`, "primary")
         setLoadingProgress(100);
     }
     const openDltModal = (currentNote) => {
@@ -53,7 +57,7 @@ const Notes = () => {
         setLoadingProgress(20);
         dltNote(dltModal.id)
         dltModalRef.current.click();
-        showAlert(`${editedNote.eTitle} has been deleted successfully`, "primary")
+        showAlert("Your note has been deleted successfully.", "primary")
         setLoadingProgress(100);
     }
     return (
@@ -67,18 +71,19 @@ const Notes = () => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">Update</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form>
-                                <div className="mb-2">
-                                    <label htmlFor="eTitle" className="form-label">Title</label>
-                                    <input type="text" className="form-control" id="eTitle" name='eTitle' aria-describedby="emailHelp" value={editedNote.eTitle} onChange={onChange} />
+                                <div>
+                                    <label htmlFor="eTitle" className="form-label d-none">Title</label>
+                                    <input type="text" className="form-control fs-4 title" id="eTitle" name='eTitle' placeholder='Title' aria-describedby="emailHelp" value={editedNote.eTitle} minLength={2} maxLength={120} onChange={onChange} />
                                 </div>
+                                <hr style={{ marginBlock: "0" }} />
                                 <div className="mb-4">
-                                    <label htmlFor="eDescription" className="form-label col-form-label-lg">Description</label>
-                                    <textarea type="text" className="form-control form-control-lg eDescription" id="eDescription" name='eDescription' value={editedNote.eDescription} onChange={onChange} />
+                                    <label htmlFor="eDescription" className="form-label col-form-label-lg d-none">Description</label>
+                                    <textarea type="text" className="form-control form-control-lg description" id="eDescription" name='eDescription' placeholder='Description' value={editedNote.eDescription} onChange={onChange} />
                                 </div>
                                 <div className="input-group mb-1">
                                     <label htmlFor="tag" className="input-group-text">Tag</label>
@@ -99,7 +104,7 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-primary" onClick={handleClickOnUpdateNote} disabled={editedNote.eTitle.length < 2 || editedNote.eDescription.length < 5} >Update Note</button>
-                            <button type="button" ref={closeModalRef} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" ref={editModalRef} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -112,7 +117,7 @@ const Notes = () => {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">{dltModal.title}</h5>
+                            <h5 className="modal-title text-break me-2" id="exampleModalLabel">{dltModal.title}</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body h6">
@@ -127,16 +132,14 @@ const Notes = () => {
                 </div>
             </div>
             {/* Notes Section */}
-            {
-                localStorage.getItem('token') &&
+            {localStorage.getItem('token') &&
                 <div className="row my-3">
                     <h2>Your Notes</h2>
                     {notes.length === 0 && <h3 className='container d-flex justify-content-center my-2 text-muted'>No Notes to Display</h3>}
-
                     {notes.map((note) => {
                         return <NoteItem key={note._id} note={note} updateNote={updateNote} openDltModal={openDltModal} />
                     })}
-                </div>}
+            </div>}
         </>
     )
 }

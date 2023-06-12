@@ -1,6 +1,6 @@
 /* AddNote */
 .description{
-    height: 175px;
+    height: 225px;
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -10,12 +10,9 @@
     border-bottom: none;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    margin-bottom: 0;
 }
 /* Notes */
-.eDescription{
-    height: 150px;
-    resize: none;
-}
 .fa-triangle-exclamation{
     font-size: 1.35rem;
 }

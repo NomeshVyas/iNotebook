@@ -15,7 +15,7 @@ const AddNote = () => {
         setLoadingProgress(20);
         addNote(note.title, note.description, note.tag);
         setLoadingProgress(70);
-        showAlert(`${note.title} added successfully.`, "primary");
+        showAlert(`"${note.title}" added successfully.`, "primary");
         setNote({ title: "", description: "", tag: "General" });
         setLoadingProgress(100);
     }
@@ -30,12 +30,12 @@ const AddNote = () => {
             <form onSubmit={handleClickOnAddNote}>
                 <div>
                     <label htmlFor="title" className="form-label col-form-label-lg d-none">Title</label>
-                    <input type="text" className="form-control form-control-lg title" id="title" name='title' aria-describedby="emailHelp" placeholder='Title' value={note.title} onChange={onChange} minLength={2} required />
+                    <input type="text" className="form-control form-control-lg title" id="title" name='title' aria-describedby="emailHelp" placeholder='Title' value={note.title} onChange={onChange} minLength={2} maxLength={120} required />
                 </div>
                 <hr style={{ marginBlock: "0" }} />
                 <div className="mb-2">
                     <label htmlFor="description" className="form-label col-form-label-lg d-none">Description</label>
-                    <textarea type="text" className="form-control description" id="description" name='description' placeholder='Description' value={note.description} onChange={onChange} minLength="5" required />
+                    <textarea type="text" className="form-control description" id="description" name='description' placeholder='Description' value={note.description} onChange={onChange} minLength={5} required />
                 </div>
                 <div className="input-group my-3">
                     <label htmlFor="tag" className="input-group-text">Tag</label>
