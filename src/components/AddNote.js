@@ -34,7 +34,7 @@ const AddNote = () => {
                 </div>
                 <hr style={{ marginBlock: "0" }} />
                 <div className="mb-2">
-                    <label htmlFor="description" className="form-label col-form-label-lg d-none">Description</label>
+                    {/* <label htmlFor="description" className="form-label col-form-label-lg d-none">Description</label> */}
                     <textarea type="text" className="form-control description" id="description" name='description' placeholder='Description' value={note.description} onChange={onChange} minLength={5} required />
                 </div>
                 <div className="input-group my-3">

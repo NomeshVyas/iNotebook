@@ -24,7 +24,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            iNotebook
+            <img style={{ width: "25px", borderRadius: "50%", marginTop: "-3px" }} src="https://w7.pngwing.com/pngs/739/481/png-transparent-note-taking-reading-writing-taking-miscellaneous-angle-text-thumbnail.png" alt="" /> <span className='text-info'>i</span>Notebook
           </Link>
           <button
             className="navbar-toggler"
@@ -40,29 +40,17 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link
+                {localStorage.getItem("token") && <Link
                   className={`nav-link ${location.pathname === "/" ? "active" : ""
                     }`}
                   aria-current="page"
                   to="/"
                 >
                   Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${location.pathname === "/about" ? "active" : ""
-                    }`}
-                  to="/about"
-                >
-                  About
-                </Link>
+                </Link>}
               </li>
             </ul>
-            {localStorage.getItem("token") ? <button className="btn btn-primary btn-sm mx-2 px-2" onClick={handleLogOut} >Log out</button> : <form className="d-flex">
-              <Link to="/login" className="btn btn-primary btn-sm mx-2 px-2" role="button">Login</Link>
-              <Link to="/signup" className="btn btn-primary btn-sm" role="button">Sign up</Link>
-            </form>}
+            {localStorage.getItem("token") && <button className="btn btn-primary btn-sm mx-2 px-2" onClick={handleLogOut} >Log out</button>}
           </div>
         </div>
       </nav>
