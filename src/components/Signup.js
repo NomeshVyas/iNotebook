@@ -27,7 +27,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     if (signupCredentials.password !== signupCredentials.confirmPass) {
-      return alert("password dosen't match with confirm password");
+      return showAlert("password dosen't match with confirm password", "danger");
     }
     setLoadingProgress(20);
     const url = `${host}/api/auth/createuser`;
@@ -57,7 +57,7 @@ const Signup = () => {
       <form className='shadow py-3 px-4 rounded' onSubmit={handleSignup}>
         <div className="mb-2">
           <label htmlFor="username" className="form-label">User Name :</label>
-          <input type="text" className="form-control" id="username" name='name' style={{textTransform: "capitalize"}} value={signupCredentials.name} onChange={onChange} required />
+          <input type="text" className="form-control" id="username" name='name' style={{ textTransform: "capitalize" }} value={signupCredentials.name} onChange={onChange} required />
         </div>
         <div className="mb-2">
           <label htmlFor="signupEmail" className="form-label">Email address :</label>

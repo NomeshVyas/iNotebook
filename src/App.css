@@ -1,3 +1,9 @@
+:root{
+    --editBtnHoverColor: #00afef;
+    --dltBtnHoverColor: #ff5b6f;
+    --viewTitleDescriptionWidth: 95vw;
+    --viewNoteBorderRadius: 10px;
+}
 /* AddNote */
 .description{
     height: 225px;
@@ -17,33 +23,40 @@
     font-size: 1.35rem;
 }
 .viewTitle{
-    width: 95vw;
+    width: var(--viewTitleDescriptionWidth);
     outline: none;
     background-color: white;
     margin-bottom: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    border-top-left-radius: var(--viewNoteBorderRadius);
+    border-top-right-radius: var(--viewNoteBorderRadius);
     font-size: 1.35rem;
     border-bottom: none;
 }
 .viewDescription{
-    width: 95vw;
+    width: var(--viewTitleDescriptionWidth);
     min-height: 70vh;
     background-color: white;
     font-size: 1.175rem;
     border-top: none;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: var(--viewNoteBorderRadius);
+    border-bottom-right-radius: var(--viewNoteBorderRadius);
     outline: none;
     resize: none;
     border-top-color: white;
 }
 .viewModalEditBtn:hover{
-    background-color: #00afef;
-    border-color: #00afef;
+    background-color: var(--editBtnHoverColor);
+    border-color: var(--editBtnHoverColor);
 }
 .viewModalDltBtn:hover{
-    background-color: #ff5b6f;
-    border-color: #ff5b6f;
+    background-color: var(--dltBtnHoverColor);
+    border-color: var(--dltBtnHoverColor);
 }
 /* NoteItem */
+.NoteItemBadge{
+    position: absolute;
+    top: -0.75%;
+    right: -1%;
+}
