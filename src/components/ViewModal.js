@@ -13,12 +13,23 @@ const ViewModal = () => {
                 <div className="modal-dialog modal-fullscreen">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="viewModalTitle">
-                                <img style={{ width: "25px", borderRadius: "50%", marginTop: "-3px" }} src="https://w7.pngwing.com/pngs/739/481/png-transparent-note-taking-reading-writing-taking-miscellaneous-angle-text-thumbnail.png" alt="" />
+                            <h5 className="modal-title d-flex" id="viewModalTitle">
+                                <img style={{ width: "27px", height: "27px", borderRadius: "50%" }} src="https://w7.pngwing.com/pngs/739/481/png-transparent-note-taking-reading-writing-taking-miscellaneous-angle-text-thumbnail.png" alt="" />
                                 <span className='text-info'>i</span>Notebook
-                                <span className="badge rounded-pill ms-2" style={{ background: tagColorChange(editedNote.eTag), fontWeight: "500", fontSize: "0.85rem" }}>
+                                {noteEditable ? <select className="form-select ms-2 py-0 rounded-pill d-flex align-items-center" id="eTag"  aria-label="select updated tag" name='eTag' value={editedNote.eTag} onChange={onChangeEditedNote} >
+                                    <option value="General">General</option>
+                                    <option value="Personal">Personal</option>
+                                    <option value="Important">Important</option>
+                                    <option value="Quote">Quote</option>
+                                    <option value="Study">Study</option>
+                                    <option value="Project">Project</option>
+                                    <option value="Event">Event</option>
+                                    <option value="Celebration">Celebration</option>
+                                    <option value="Statement">Statement</option>
+                                    <option value="Confused">Confused</option>
+                                </select> : <span className="badge rounded-pill ms-2 viewModalBadge d-flex align-items-center" style={{ background: tagColorChange(editedNote.eTag) }}>
                                     {editedNote.eTag}
-                                </span>
+                                </span>}
                             </h5>
                             <button type="button" className="btn-close" onClick={() => { setNoteEditable(false); }} ref={viewCloseRef} data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>

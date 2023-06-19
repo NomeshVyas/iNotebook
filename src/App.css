@@ -18,10 +18,11 @@
     border-bottom-right-radius: 0;
     margin-bottom: 0;
 }
-/* Notes */
+/*deleteModal  */
 .fa-triangle-exclamation{
     font-size: 1.35rem;
 }
+/* ViewModal */
 .viewTitle{
     width: var(--viewTitleDescriptionWidth);
     outline: none;
@@ -45,6 +46,10 @@
     outline: none;
     resize: none;
     border-top-color: white;
+}
+.viewModalBadge{
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 .viewModalEditBtn:hover{
     background-color: var(--editBtnHoverColor);
