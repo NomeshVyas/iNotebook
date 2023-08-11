@@ -16,7 +16,7 @@ const NoteItem = (props) => {
                     <div className="d-flex justify-content-between mb-1">
                         <h5 className="card-title text-break pt-1">{note.title}</h5>
                     </div>
-                    <p className="card-text">{note.description}</p>
+                    <p className="card-text" style={{whiteSpace: 'pre-wrap', overflowWrap: 'break-word'}}>{note.description}</p>
                 </div>
             </div>
         </div>

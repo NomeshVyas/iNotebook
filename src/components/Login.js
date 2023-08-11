@@ -51,7 +51,7 @@ const Login = () => {
   return (
     <div className='container mt-4'>
       <h1 className='text-center mb-4'>Login to <span className='text-primary'>i</span>Notebook</h1>
-      <form className='shadow p-4 rounded' onSubmit={handleLogin}>
+      <form className='shadow p-4 rounded' onSubmit={handleLogin} style={{maxWidth: '575px', marginInline: 'auto'}}>
         <div className="mb-4">
           <label htmlFor="loginEmail" className="form-label">Email address :</label>
           <input type="email" className="form-control" id="loginEmail" name='email' value={credentials.email} aria-describedby="emailHelp" onChange={onChange} required />

@@ -54,7 +54,7 @@ const Signup = () => {
     <div className='container'>
       <h1 className='text-center'>Create a new account</h1>
       <h6 className='text-center text-muted mb-2'>It's quick and easy.</h6>
-      <form className='shadow py-3 px-4 rounded' onSubmit={handleSignup}>
+      <form className='shadow py-3 px-4 rounded' onSubmit={handleSignup} style={{maxWidth: '575px', marginInline: 'auto'}}>
         <div className="mb-2">
           <label htmlFor="username" className="form-label">User Name :</label>
           <input type="text" className="form-control" id="username" name='name' style={{ textTransform: "capitalize" }} value={signupCredentials.name} onChange={onChange} required />

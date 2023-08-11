@@ -8,7 +8,7 @@ const AddNote = () => {
     const altContext = useContext(alertContext);
     const { setLoadingProgress, showAlert } = altContext;
 
-    const [note, setNote] = useState({ title: "", description: "", tag: "default" })
+    const [note, setNote] = useState({ title: "", description: "", tag: "General" })
 
     const handleClickOnAddNote = (e) => {
         e.preventDefault();
@@ -19,7 +19,6 @@ const AddNote = () => {
         setNote({ title: "", description: "", tag: "General" });
         setLoadingProgress(100);
     }
-
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value });
     }
@@ -52,7 +51,7 @@ const AddNote = () => {
                         <option value="Confused">Confused</option>
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary" disabled={note.description.length < 5} >Submit</button>
+                <button type="submit" className="btn btn-primary" disabled={note.description.length < 5} >Save</button>
             </form>
         </div>
     )
