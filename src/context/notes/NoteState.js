@@ -4,7 +4,7 @@ import { useContext } from "react";
 import alertContext from "../alerts/AlertContext";
 
 const NoteState = (props) => {
-  const host = "http://localhost:5000";
+  const host = "https://inotebook-backend-6xao.onrender.com";
   const notesInitial = [];
 
   const altContext = useContext(alertContext);

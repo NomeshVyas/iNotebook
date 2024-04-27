@@ -7,7 +7,7 @@ const connectToMongo = () => {
     }).then(
         () => { console.log("connected to mongo successfully") }
     ).catch(
-        () => { console.log("connection error") }
+        () => { console.log("connection error...") }
     )
 }
 
